@@ -9,7 +9,7 @@ defmodule InfoSys do
 
 
   # define our backends
-  @backends [Kenbruen.InfoSys.Wolfram]
+  @backends [InfoSys.Wolfram]
 
   defmodule Result do
     defstruct score: 0, text: nil, url: nil, backend: nil
@@ -34,7 +34,7 @@ defmodule InfoSys do
   defp spawn_query(backend, query, limit) do
     query_ref = make_ref()
     opts = [backend, query, query_ref, self(), limit]
-    {:ok, pid} = Supervisor.start_child(Kenbruen.InfoSys.Supervisor, opts)
+    {:ok, pid} = Supervisor.start_child(InfoSys.Supervisor, opts)
     monitor_ref = Process.monitor(pid)
     {pid, monitor_ref, query_ref}
   end
